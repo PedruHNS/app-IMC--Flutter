@@ -37,11 +37,6 @@ class _HomePageState extends State<HomePage> {
     final peso = double.parse(pesoController.text);
     final altura = double.parse(alturaController.text);
     final imc = peso / (altura * altura);
-    setState(() => _imc = imc);
-  }
-
-//TODO adicionar a classificação
-  void _classificacao() {
     String faixa;
     if (_imc < 18.5) {
       faixa = "baixo peso";
@@ -52,7 +47,11 @@ class _HomePageState extends State<HomePage> {
     } else {
       faixa = "obesidade";
     }
-    setState(() => _status = faixa);
+
+    setState(() {
+      _imc = imc;
+      _status = faixa;
+    });
   }
 
   @override
@@ -65,8 +64,10 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Center(
         child: Container(
-          color: const Color.fromARGB(255, 44, 51, 51),
+          color: const Color.fromARGB(255, 203, 207, 207),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -122,16 +123,63 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              Container(
-                alignment: Alignment.center,
-                color: const Color.fromARGB(255, 14, 131, 136),
-                width: 300,
-                height: 60,
-                child: Text(
-                  _imc.toStringAsFixed(2),
-                  style: const TextStyle(
-                      fontSize: 28, fontWeight: FontWeight.w400),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 14, 131, 136),
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Color.fromARGB(137, 0, 0, 0),
+                              spreadRadius: 1.1,
+                              offset: Offset(1, 1),
+                              blurRadius: 1)
+                        ],
+                      ),
+                      width: 100,
+                      height: 60,
+                      child: Text(
+                        _imc.toStringAsFixed(2),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 14, 131, 136),
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Color.fromARGB(137, 0, 0, 0),
+                              spreadRadius: 1.1,
+                              offset: Offset(1, 1),
+                              blurRadius: 1)
+                        ],
+                      ),
+                      width: 200,
+                      height: 60,
+                      child: Text(
+                        "$_status",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
               ElevatedButton(
                   onPressed: _calcImc, child: const Text("calcular")),
