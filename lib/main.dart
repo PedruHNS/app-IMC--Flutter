@@ -36,21 +36,20 @@ class _HomePageState extends State<HomePage> {
   void _calcImc() {
     final peso = double.parse(pesoController.text);
     final altura = double.parse(alturaController.text);
-    final imc = peso / (altura * altura);
-    String faixa;
-    if (_imc < 18.5) {
-      faixa = "baixo peso";
-    } else if (_imc <= 24.99) {
-      faixa = "normal";
-    } else if (_imc <= 29.99) {
-      faixa = "sobrepeso";
-    } else {
-      faixa = "obesidade";
-    }
+    _imc = peso / (altura * altura);
 
+    if (_imc < 18.5) {
+      _status = "baixo peso";
+    } else if (_imc <= 24.99) {
+      _status = "normal";
+    } else if (_imc <= 29.99) {
+      _status = "sobrepeso";
+    } else {
+      _status = "obesidade";
+    }
     setState(() {
-      _imc = imc;
-      _status = faixa;
+      _imc;
+      _status;
     });
   }
 
@@ -182,7 +181,10 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               ElevatedButton(
-                  onPressed: _calcImc, child: const Text("calcular")),
+                  onPressed: () {
+                    _calcImc();
+                  },
+                  child: const Text("calcular")),
             ],
           ),
         ),
