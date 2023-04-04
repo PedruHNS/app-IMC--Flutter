@@ -43,6 +43,15 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  void _clear() {
+    _pesoController.clear();
+    _alturaController.clear();
+    setState(() {
+      _imc = 0.00;
+      _status = "";
+    });
+  }
+
   void _calcImc() {
     final peso = double.parse(_pesoController.text);
     final altura = double.parse(_alturaController.text);
@@ -100,15 +109,24 @@ class _HomePageState extends State<HomePage> {
                     ),
                     BoxCalc(
                       icone: MdiIcons.abjadHebrew,
-                      display: _imc.toStringAsFixed(2),
+                      display: _imc > 0.00 ? _imc.toStringAsFixed(2) : "",
                     ),
                   ],
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      _calcImc();
-                    },
-                    child: const Text("calcular")),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: _calcImc,
+                      child: const Text("calcular"),
+                    ),
+                    ElevatedButton(
+                      onPressed: _clear,
+                      child: const Text("limpar"),
+                    )
+                  ],
+                ),
               ],
             ),
           ),

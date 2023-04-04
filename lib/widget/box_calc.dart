@@ -35,14 +35,21 @@ class BoxCalc extends StatelessWidget {
               size: 30,
               color: Colors.black,
             ),
-            if (display.isEmpty)
-              Text(
-                display,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
+            Builder(
+              builder: (context) {
+                if (display.isNotEmpty) {
+                  return Text(
+                    display,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
+            ),
           ],
         ),
       ),
