@@ -16,11 +16,17 @@ class InputText extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        validator: (String? value) {
+          if (value!.isEmpty) {
+            return "digite o valor";
+          }
+          return null;
+        },
         controller: controller,
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
         decoration: InputDecoration(
-          prefix: Icon(
+          prefixIcon: Icon(
             icone,
             size: 30,
             color: Colors.black,

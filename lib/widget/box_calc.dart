@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class BoxCalc extends StatelessWidget {
   final IconData icone;
   final String display;
+
   const BoxCalc({
     super.key,
     required this.icone,
@@ -30,10 +31,13 @@ class BoxCalc extends StatelessWidget {
         height: 60,
         child: Row(
           children: [
-            Icon(
-              icone,
-              size: 30,
-              color: Colors.black,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                icone,
+                size: 30,
+                color: Colors.black,
+              ),
             ),
             Builder(
               builder: (context) {
