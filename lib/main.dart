@@ -1,4 +1,7 @@
+import 'package:aplicando_conhecimento/widget/box_calc.dart';
+import 'package:aplicando_conhecimento/widget/input_text.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,14 +31,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  TextEditingController pesoController = TextEditingController();
-  TextEditingController alturaController = TextEditingController();
+  final TextEditingController _pesoController = TextEditingController();
+  final TextEditingController _alturaController = TextEditingController();
   double _imc = 0.0;
-  String? _status;
+  String _status = "";
+
+  @override
+  void dispose() {
+    _pesoController.dispose();
+    _alturaController.dispose();
+    super.dispose();
+  }
 
   void _calcImc() {
-    final peso = double.parse(pesoController.text);
-    final altura = double.parse(alturaController.text);
+    final peso = double.parse(_pesoController.text);
+    final altura = double.parse(_alturaController.text);
     _imc = peso / (altura * altura);
 
     if (_imc < 18.5) {
@@ -61,131 +71,46 @@ class _HomePageState extends State<HomePage> {
         leading: Container(),
         title: const Text("testando conhecimento"),
       ),
-      body: Center(
-        child: Container(
-          color: const Color.fromARGB(255, 203, 207, 207),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  controller: pesoController,
-                  keyboardType: TextInputType.number,
-                  textAlign: TextAlign.center,
-                  decoration: const InputDecoration(
-                    hintText: "Peso (kg)",
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                          width: 2,
-                          style: BorderStyle.solid,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(15))),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Color.fromARGB(255, 14, 131, 136),
-                          width: 2,
-                          style: BorderStyle.solid),
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                    ),
-                  ),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Center(
+          child: Container(
+            color: const Color.fromARGB(255, 203, 207, 207),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InputText(
+                  icone: MdiIcons.humanMaleHeightVariant,
+                  controller: _alturaController,
+                  hintText: "altura (m)",
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  controller: alturaController,
-                  keyboardType: TextInputType.number,
-                  textAlign: TextAlign.center,
-                  decoration: const InputDecoration(
-                    hintText: "Altura (m)",
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                          width: 2,
-                          style: BorderStyle.solid,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(15))),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Color.fromARGB(255, 14, 131, 136),
-                          width: 2,
-                          style: BorderStyle.solid),
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                    ),
-                  ),
+                InputText(
+                  icone: MdiIcons.weightKilogram,
+                  controller: _pesoController,
+                  hintText: "Peso (Kg)",
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 14, 131, 136),
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Color.fromARGB(137, 0, 0, 0),
-                              spreadRadius: 1.1,
-                              offset: Offset(1, 1),
-                              blurRadius: 1)
-                        ],
-                      ),
-                      width: 100,
-                      height: 60,
-                      child: Text(
-                        _imc.toStringAsFixed(2),
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    BoxCalc(
+                      icone: MdiIcons.armFlex,
+                      display: _status,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 14, 131, 136),
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Color.fromARGB(137, 0, 0, 0),
-                              spreadRadius: 1.1,
-                              offset: Offset(1, 1),
-                              blurRadius: 1)
-                        ],
-                      ),
-                      width: 200,
-                      height: 60,
-                      child: Text(
-                        "$_status",
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
+                    BoxCalc(
+                      icone: MdiIcons.abjadHebrew,
+                      display: _imc.toStringAsFixed(2),
                     ),
-                  )
-                ],
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    _calcImc();
-                  },
-                  child: const Text("calcular")),
-            ],
+                  ],
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      _calcImc();
+                    },
+                    child: const Text("calcular")),
+              ],
+            ),
           ),
         ),
       ),
