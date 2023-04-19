@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class InputText extends StatelessWidget {
   final TextEditingController controller;
@@ -22,6 +23,7 @@ class InputText extends StatelessWidget {
           }
           return null;
         },
+        //todo inputFormatters: ,
         controller: controller,
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,

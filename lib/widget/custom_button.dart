@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   final String nome;
-  final Function onPressed1;
-  final Function? onPressed2; //!passei por parametro mas n funciona.
+  final Function onPressed;
 
   const CustomButton({
     super.key,
-    required this.onPressed1,
-    required this.onPressed2,
+    required this.onPressed,
     required this.nome,
   });
 
@@ -21,9 +19,9 @@ class CustomButton extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        onPressed1();
-        //!verificar por que não roda a segunda função
-        onPressed2;
+        onPressed();
+      
+       
       },
       child: Text(
         nome,

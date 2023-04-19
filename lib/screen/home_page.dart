@@ -49,15 +49,14 @@ class _HomePageState extends State<HomePage> {
     } else {
       _status = "obesidade";
     }
+
     setState(() {
       _imc;
       _status;
     });
   }
 
-  void _validationForm() {
-    if (_form.currentState!.validate()) {}
-  }
+  void _validationForm() {}
 
   @override
   Widget build(BuildContext context) {
@@ -107,14 +106,17 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       CustomButton(
-                        nome: "calcular",
-                        onPressed1: _calcImc,
-                        onPressed2: _validationForm, //!função não funciona
-                      ),
+                          nome: "calcular",
+                          onPressed: () {
+                            if (_form.currentState!.validate()) {
+                              _calcImc();
+                            }
+                          }
+                          //!função não funciona
+                          ),
                       CustomButton(
                         nome: "Limpar",
-                        onPressed1: _clear,
-                        onPressed2: null,
+                        onPressed: _clear,
                       ),
                     ],
                   ),
